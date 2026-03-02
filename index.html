@@ -1,1 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alony AI Onboarding Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#05060a;
+      --panel: rgba(255,255,255,0.06);
+      --panel-2: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.10);
+      --text:#ffffff;
+      --muted: rgba(255,255,255,0.65);
+      --purple1:#4318c4;
+      --purple2:#6b3ef0;
+      --shadow: 0 22px 70px rgba(0,0,0,0.55);
+      --shadow2: 0 8px 26px rgba(0,0,0,0.35);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+        radial-gradient(1200px 600px at 20% 10%, rgba(107,62,240,0.18), transparent 60%),
+        radial-gradient(900px 500px at 85% 30%, rgba(67,24,196,0.14), transparent 55%),
+        linear-gradient(180deg, #05060a, #070814);
+      color:var(--text);
+      font-family:"DM Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      padding:22px;
+    }
+    .frame{
+      width:min(980px, 100%);
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap:16px;
+    }
+    @media (max-width: 920px){
+      .frame{grid-template-columns:1fr}
+    }
+    .card{
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    .chatHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .avatar{
+      width:38px;height:38px;border-radius:50%;
+      background: linear-gradient(135deg,var(--purple1),var(--purple2));
+      display:flex;align-items:center;justify-content:center;
+      font-family:"Nunito",sans-serif;
+      font-weight:800;
+      box-shadow: 0 0 0 2px rgba(107,62,240,0.28);
+    }
+    .brandTitle{font-weight:700;font-size:15px;letter-spacing:0.2px}
+    .brandSub{font-size:12px;color:var(--muted);margin-top:2px}
+    .pill{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.8);
+      user-select:none;
+    }
+    .chatBody{
+      height: 560px;
+      padding:16px 14px;
+      overflow:auto;
+    }
+    .bubbleRow{
+      display:flex;
+      margin:10px 0;
+      align-items:flex-start;
+      animation: fadeSlideIn .35s ease forwards;
+    }
+    @keyframes fadeSlideIn{
+      from{opacity:0; transform: translateY(6px)}
+      to{opacity:1; transform: translateY(0)}
+    }
+    .bubbleRow.user{justify-content:flex-end}
+    .bubbleRow.assistant{justify-content:flex-start}
+    .miniAvatar{
+      width:32px;height:32px;border-radius:50%;
+      background: linear-gradient(135deg,var(--purple1),var(--purple2));
+      display:flex;align-items:center;justify-content:center;
+      font-family:"Nunito",sans-serif;
+      font-weight:800;font-size:13px;
+      margin-right:10px;margin-top:2px;
+      box-shadow: 0 0 0 2px rgba(107,62,240,0.28);
+      flex-shrink:0;
+    }
+    .bubble{
+      max-width: 72%;
+      padding: 13px 17px;
+      border-radius: 18px 18px 18px 4px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+      font-size: 14.5px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .bubble.user{
+      background: linear-gradient(135deg,var(--purple1),var(--purple2));
+      border:none;
+      border-radius: 18px 18px 4px 18px;
+      box-shadow: 0 4px 20px rgba(67,24,196,0.4);
+    }
+    .composer{
+      padding: 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.06));
+    }
+    .composerRow{
+      display:flex; gap:10px; align-items:center;
+    }
+    .input{
+      flex:1;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.25);
+      color: var(--text);
+      outline:none;
+      font-size:14.5px;
+    }
+    .input::placeholder{color: rgba(255,255,255,0.45)}
+    .btn{
+      border:0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight:700;
+      cursor:pointer;
+      color:white;
+      background: linear-gradient(135deg,var(--purple1),var(--purple2));
+      box-shadow: 0 10px 26px rgba(67,24,196,0.35);
+      transition: transform .08s ease, filter .08s ease;
+      white-space:nowrap;
+    }
+    .btn:active{transform: translateY(1px); filter:brightness(0.95)}
+    .btn.secondary{
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow:none;
+      color: rgba(255,255,255,0.9);
+    }
+    .hint{
+      margin-top:10px;
+      font-size:12px;
+      color: rgba(255,255,255,0.55);
+    }
+    .typing{
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+      padding: 12px 14px;
+      border-radius: 18px 18px 18px 4px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.65);animation:bounce 1.1s infinite}
+    .dot:nth-child(2){animation-delay:.12s}
+    .dot:nth-child(3){animation-delay:.24s}
+    @keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:.55}40%{transform:translateY(-4px);opacity:1}}
+    .side{
+      padding:16px;
+    }
+    .side h2{
+      margin:0 0 10px 0;
+      font-size:14px;
+      letter-spacing:0.2px;
+      color: rgba(255,255,255,0.9);
+    }
+    .kv{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      margin:8px 0;
+    }
+    .k{font-size:12px;color:rgba(255,255,255,0.62)}
+    .v{font-size:12.5px;color:rgba(255,255,255,0.92);text-align:right;max-width:60%}
+    .rowActions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .warn{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,184,0,0.25);
+      background: rgba(255,184,0,0.08);
+      color: rgba(255,226,160,0.95);
+      font-size:12.5px;
+      line-height:1.5;
+    }
+    .ok{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(0,255,170,0.22);
+      background: rgba(0,255,170,0.08);
+      color: rgba(200,255,235,0.95);
+      font-size:12.5px;
+      line-height:1.5;
+    }
+    .small{
+      font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5
+    }
+    .editRow{
+      display:flex;gap:8px;margin-top:8px
+    }
+    .editRow input{
+      flex:1;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.25);
+      color:#fff;
+      outline:none;
+      font-size:13.5px;
+    }
+  </style>
+</head>
 
+<body>
+  <div class="frame">
+    <!-- CHAT -->
+    <div class="card">
+      <div class="chatHeader">
+        <div class="brand">
+          <div class="avatar">A</div>
+          <div>
+            <div class="brandTitle">Alony AI — Onboarding</div>
+            <div class="brandSub" id="subline">Aria will collect the details needed to build your first agent.</div>
+          </div>
+        </div>
+        <div class="pill" id="statusPill">Ready</div>
+      </div>
+
+      <div class="chatBody" id="chatBody"></div>
+
+      <div class="composer">
+        <div class="composerRow">
+          <input class="input" id="chatInput" placeholder="Type your answer…" autocomplete="off" />
+          <button class="btn" id="sendBtn">Send</button>
+          <button class="btn secondary" id="restartBtn" title="Restart onboarding">Restart</button>
+        </div>
+        <div class="hint">
+          Tip: press <b>Enter</b> to send. When Aria finishes, you’ll get a summary on the right to review and submit.
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card">
+      <div class="side">
+        <h2>Captured configuration</h2>
+        <div class="small" style="margin-bottom:10px">
+          This panel appears when the assistant returns <b>ARIA_COMPLETE:{"{...}"}</b>. You can edit fields before submitting.
+        </div>
+
+        <div id="summaryEmpty" class="small">
+          No data captured yet. Start chatting on the left.
+        </div>
+
+        <div id="summaryWrap" style="display:none">
+          <div id="summaryFields"></div>
+
+          <div id="warningBox" class="warn" style="display:none"></div>
+          <div id="submittedBox" class="ok" style="display:none">Submitted. You can restart to onboard another business.</div>
+
+          <div class="rowActions">
+            <button class="btn" id="submitBtn">Submit to webhook</button>
+            <button class="btn secondary" id="editModeBtn">Edit a field</button>
+          </div>
+
+          <div id="editUI" style="display:none">
+            <div class="editRow">
+              <input id="editKey" placeholder="field key (e.g. agent_name)" />
+              <input id="editVal" placeholder="new value" />
+            </div>
+            <div class="rowActions" style="margin-top:10px">
+              <button class="btn" id="applyEditBtn">Apply edit</button>
+              <button class="btn secondary" id="cancelEditBtn">Cancel</button>
+            </div>
+            <div class="small" style="margin-top:8px">
+              Keys: agent_name, inbound_outbound, purpose, desired_outcome, tonality, greeting_message, lead_data, warm_cold, faq_objections, area_code, voicemail, booking_capabilities, call_transfer_allowed, call_transfer_number, call_transfer_requirements, subscription_plan, company_name, client_email, agent_description
+            </div>
+          </div>
+        </div>
+
+        <div class="small" style="margin-top:14px">
+          <b>Important:</b> If you want “perfect” AI replies, do not call Anthropic directly from the browser (you’d expose your API key).
+          Instead, point <code>WEBHOOK_URL</code> to an n8n webhook that calls your LLM securely and returns <code>{"reply": "..."}.</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/**
+ * =========================
+ * CONFIG
+ * =========================
+ * For "no Node" deployment, keep this as a static file + a webhook.
+ *
+ * Your n8n webhook should support:
+ *  - Chat: receive { mode:"chat", system:"...", messages:[{role,content},...] }
+ *          return JSON { reply:"assistant text" }
+ *  - Submit: receive { mode:"submit", payload:{...mapped fields...} }
+ *          return anything (we treat as success)
+ *
+ * If you only have ONE webhook, you can branch on `mode` inside n8n.
+ */
+const WEBHOOK_URL = "https://alony.app.n8n.cloud/webhook/aria-proxy";
+
+/** Simulated inbound userData (replace with query params / Softr user variables if you want) */
+const userData = {
+  company_name: "Acme Corp",
+  email: "hello@acmecorp.com",
+  plan: "Standard"
+};
+
+function buildSystemPrompt(userData){
+  return `
+You are Aria, Alony AI's elite onboarding specialist. You're helping ${userData.company_name || "this business"} set up their first AI voice agent. Your job is to collect all required configuration details through natural, exciting conversation — making the client feel like they're building something genuinely powerful.
+
+## YOUR PERSONALITY
+- Energetic, sharp, and genuinely excited about what this agent will do for their business
+- You speak like a knowledgeable friend, not a form
+- You celebrate their answers: "Perfect — that's going to make your agent incredibly effective"
+- You explain jargon instantly without being condescending
+- You ask ONE question at a time, never stack questions
+- You make them feel like they're making important product decisions
+
+## THE TASK
+You must collect the required fields for an AI voice agent onboarding. Ask one question at a time and confirm unclear answers.
+
+### REQUIRED FIELDS (must collect)
+- agent_name
+- inbound_outbound (Inbound or Outbound)
+- lead_data (What data they have on callers/leads)
+- purpose (Reason for inquiry inbound / purpose of outbound call)
+- warm_cold (Outbound only: warm or cold)
+- faq_objections (FAQs + objections to handle)
+- greeting_message (Write a realistic greeting based on collected details)
+- tonality
+- desired_outcome
+- area_code
+- voicemail (optional)
+- booking_capabilities
+- call_transfer_allowed
+- call_transfer_number (if transfer allowed)
+- call_transfer_requirements (if transfer allowed)
+- subscription_plan (from userData.plan)
+- company_name (from userData.company_name)
+- client_email (from userData.email)
+- agent_description (optional)
+
+### RULES
+- Ask ONE question at a time.
+- If user is unsure, suggest a sensible default, then ask to confirm.
+- Keep it punchy and human. No long lectures.
+
+### When You Have Everything
+When all required fields are collected, output a special JSON signal ONLY — no extra text before or after:
+
+ARIA_COMPLETE:{"agent_name":"...","inbound_outbound":"...","lead_data":"...","purpose":"...","warm_cold":"...","faq_objections":"...","greeting_message":"...","tonality":"...","desired_outcome":"...","area_code":"...","voicemail":"...","booking_capabilities":"...","call_transfer_allowed":"...","call_transfer_number":"...","call_transfer_requirements":"...","company_name":"${userData.company_name}","client_email":"${userData.email}","subscription_plan":"${userData.plan}","agent_description":"..."}
+
+Start by greeting the user and asking the first question.
+`.trim();
+}
+
+/* =========================
+ * STATE
+ * ========================= */
+let messages = []; // {role:"assistant"|"user", content:"..."}
+let collectedData = null;
+let loading = false;
+let submitted = false;
+
+/* =========================
+ * DOM
+ * ========================= */
+const chatBody = document.getElementById("chatBody");
+const chatInput = document.getElementById("chatInput");
+const sendBtn = document.getElementById("sendBtn");
+const restartBtn = document.getElementById("restartBtn");
+const statusPill = document.getElementById("statusPill");
+
+const summaryEmpty = document.getElementById("summaryEmpty");
+const summaryWrap = document.getElementById("summaryWrap");
+const summaryFields = document.getElementById("summaryFields");
+const warningBox = document.getElementById("warningBox");
+const submittedBox = document.getElementById("submittedBox");
+
+const submitBtn = document.getElementById("submitBtn");
+const editModeBtn = document.getElementById("editModeBtn");
+const editUI = document.getElementById("editUI");
+const editKey = document.getElementById("editKey");
+const editVal = document.getElementById("editVal");
+const applyEditBtn = document.getElementById("applyEditBtn");
+const cancelEditBtn = document.getElementById("cancelEditBtn");
+
+/* =========================
+ * UI HELPERS
+ * ========================= */
+function setStatus(text){
+  statusPill.textContent = text;
+}
+
+function scrollToBottom(){
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function render(){
+  chatBody.innerHTML = "";
+  for(const m of messages){
+    const row = document.createElement("div");
+    row.className = "bubbleRow " + (m.role === "user" ? "user" : "assistant");
+
+    if(m.role !== "user"){
+      const av = document.createElement("div");
+      av.className = "miniAvatar";
+      av.textContent = "A";
+      row.appendChild(av);
+    }
+
+    const bub = document.createElement("div");
+    bub.className = "bubble " + (m.role === "user" ? "user" : "");
+    bub.textContent = m.content;
+    row.appendChild(bub);
+
+    chatBody.appendChild(row);
+  }
+
+  if(loading){
+    const row = document.createElement("div");
+    row.className = "bubbleRow assistant";
+    const av = document.createElement("div");
+    av.className = "miniAvatar";
+    av.textContent = "A";
+    row.appendChild(av);
+
+    const typing = document.createElement("div");
+    typing.className = "typing";
+    typing.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    row.appendChild(typing);
+
+    chatBody.appendChild(row);
+  }
+
+  scrollToBottom();
+}
+
+function renderSummary(){
+  if(!collectedData){
+    summaryEmpty.style.display = "block";
+    summaryWrap.style.display = "none";
+    return;
+  }
+  summaryEmpty.style.display = "none";
+  summaryWrap.style.display = "block";
+
+  const fields = [
+    ["agent_name","Agent Name"],
+    ["inbound_outbound","Direction"],
+    ["purpose","Purpose"],
+    ["desired_outcome","Desired Outcome"],
+    ["tonality","Tone"],
+    ["greeting_message","Greeting Message"],
+    ["lead_data","Lead Data"],
+    ["warm_cold","Lead Temperature"],
+    ["faq_objections","FAQ / Objections"],
+    ["area_code","Area Code"],
+    ["voicemail","Voicemail"],
+    ["booking_capabilities","Booking Capabilities"],
+    ["call_transfer_allowed","Call Transfer Allowed"],
+    ["call_transfer_number","Transfer Number"],
+    ["call_transfer_requirements","Transfer Requirements"],
+    ["subscription_plan","Subscription Plan"],
+    ["company_name","Company Name"],
+    ["client_email","Client Email"],
+    ["agent_description","Agent Description"],
+  ];
+
+  summaryFields.innerHTML = "";
+  for(const [key,label] of fields){
+    const val = (collectedData && collectedData[key]) ? String(collectedData[key]) : "";
+    const kv = document.createElement("div");
+    kv.className = "kv";
+    kv.innerHTML = `<div class="k">${label}<div class="small" style="margin-top:2px">${key}</div></div>
+                    <div class="v">${escapeHtml(val).slice(0, 220)}${val.length>220?"…":""}</div>`;
+    summaryFields.appendChild(kv);
+  }
+}
+
+function escapeHtml(str){
+  return (str||"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* =========================
+ * PARSING
+ * ========================= */
+function tryExtractAriaComplete(text){
+  const marker = "ARIA_COMPLETE:";
+  const idx = text.indexOf(marker);
+  if(idx === -1) return null;
+  const jsonPart = text.slice(idx + marker.length).trim();
+  try{
+    const obj = JSON.parse(jsonPart);
+    return obj;
+  }catch(e){
+    // Sometimes model adds trailing text; attempt best-effort:
+    const firstBrace = jsonPart.indexOf("{");
+    const lastBrace = jsonPart.lastIndexOf("}");
+    if(firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace){
+      try{
+        return JSON.parse(jsonPart.slice(firstBrace, lastBrace+1));
+      }catch(_){}
+    }
+    return null;
+  }
+}
+
+/* =========================
+ * NETWORK
+ * ========================= */
+async function webhookChat(system, history){
+  const res = await fetch(WEBHOOK_URL, {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      mode: "chat",
+      system,
+      messages: history,
+      userData
+    })
+  });
+  const data = await res.json().catch(()=>({}));
+  return data.reply || "";
+}
+
+async function webhookSubmit(mappedPayload){
+  // no-cors compatible submission for max compatibility
+  await fetch(WEBHOOK_URL, {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ mode:"submit", payload: mappedPayload }),
+    mode: "no-cors"
+  });
+}
+
+/* =========================
+ * LOGIC
+ * ========================= */
+function mapCollectedDataToSubmitPayload(collectedData){
+  return {
+    "The agents name": collectedData.agent_name,
+    "Inbound/Outbound": collectedData.inbound_outbound,
+    "Data you have on people you are calling/called by": collectedData.lead_data,
+    "Your website": "",
+    "Your company name": collectedData.company_name,
+    "The purpose of the call for outbound/ reason for inquiry inbound": collectedData.purpose,
+    "Warm or cold lead (Outbound ONLY)": collectedData.warm_cold || "",
+    "FAQ and Objection Handling (Leave blank for general responses)": collectedData.faq_objections || "",
+    "Agent Greeting Message": collectedData.greeting_message,
+    "Tonality of agent e.g. Serious, Happy, Empathetic": collectedData.tonality,
+    "Desired Outcome of Call": collectedData.desired_outcome,
+    "Area code": collectedData.area_code,
+    "Leave a voicemail (If no leave blank, if yes write word for word, including variable)": collectedData.voicemail || "",
+    "Will the agent need booking capabilities": collectedData.booking_capabilities,
+    "Call transfer allowed (If yes answer below)": collectedData.call_transfer_allowed === "Yes" ? ["Yes"] : ["No"],
+    "Call transfer number": collectedData.call_transfer_number || "",
+    "Call transfer requirements (Copy and paste if provided by user write or write exactly 'Normal' for normal rules)": collectedData.call_transfer_requirements || "",
+    "Subscription Plan": collectedData.subscription_plan,
+    "Company Name": collectedData.company_name,
+    "Client Phone Number": "",
+    "Client Email": collectedData.client_email,
+    "External CRM/Software": "No",
+    "External Endpoint": "",
+    "Agent Name": collectedData.agent_name,
+    "Agent Description": collectedData.agent_description || collectedData.purpose
+  };
+}
+
+async function startConversation(){
+  setStatus("Starting…");
+  loading = true;
+  render();
+
+  const system = buildSystemPrompt(userData);
+  const history = [{ role:"user", content:"START_ONBOARDING" }];
+
+  try{
+    const reply = await webhookChat(system, history);
+    messages = [{ role:"assistant", content: reply }];
+  }catch(e){
+    messages = [{ role:"assistant", content: "I couldn't reach the webhook. Update WEBHOOK_URL in index.html and try again." }];
+  } finally{
+    loading = false;
+    setStatus("Ready");
+    render();
+  }
+}
+
+async function sendUserMessage(){
+  const text = (chatInput.value || "").trim();
+  if(!text || loading) return;
+
+  // add user bubble
+  messages.push({ role:"user", content:text });
+  chatInput.value = "";
+  warningBox.style.display = "none";
+  submittedBox.style.display = "none";
+  submitted = false;
+
+  // prep history for webhook
+  const system = buildSystemPrompt(userData);
+  const history = [{ role:"user", content:"START_ONBOARDING" }];
+
+  // Recreate history from visible messages (assistant/user)
+  for(const m of messages){
+    history.push({ role: m.role, content: m.content });
+  }
+
+  loading = true;
+  setStatus("Thinking…");
+  render();
+
+  try{
+    const reply = await webhookChat(system, history);
+    loading = false;
+    setStatus("Ready");
+
+    const extracted = tryExtractAriaComplete(reply);
+    if(extracted){
+      collectedData = extracted;
+      // Ensure these are present
+      collectedData.company_name = collectedData.company_name || userData.company_name || "";
+      collectedData.client_email = collectedData.client_email || userData.email || "";
+      collectedData.subscription_plan = collectedData.subscription_plan || userData.plan || "";
+      messages.push({ role:"assistant", content: "Perfect — I’ve captured everything. Review the summary on the right, edit if needed, then submit." });
+      render();
+      renderSummary();
+      return;
+    }
+
+    messages.push({ role:"assistant", content: reply || "…" });
+    render();
+  }catch(e){
+    loading = false;
+    setStatus("Ready");
+    messages.push({ role:"assistant", content: "I hit an error calling the webhook. Check your webhook logs and CORS settings." });
+    render();
+  }
+}
+
+async function restart(){
+  messages = [];
+  collectedData = null;
+  loading = false;
+  submitted = false;
+  editUI.style.display = "none";
+  warningBox.style.display = "none";
+  submittedBox.style.display = "none";
+  render();
+  renderSummary();
+  await startConversation();
+}
+
+/* =========================
+ * SUBMIT
+ * ========================= */
+async function submit(){
+  if(!collectedData) return;
+
+  const requiredFields = ["agent_name","inbound_outbound","purpose","desired_outcome","tonality","greeting_message","area_code"];
+  const missing = requiredFields.filter(f => !collectedData[f]);
+  if(missing.length){
+    warningBox.textContent = `Some fields are missing: ${missing.join(", ")}. You can still submit but your agent may need manual configuration.`;
+    warningBox.style.display = "block";
+  } else {
+    warningBox.style.display = "none";
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting…";
+  setStatus("Submitting…");
+
+  const payload = mapCollectedDataToSubmitPayload(collectedData);
+
+  try{
+    await webhookSubmit(payload);
+    submitted = true;
+    submittedBox.style.display = "block";
+    setStatus("Submitted");
+  }catch(e){
+    // no-cors means we can't read response; still mark as done
+    submitted = true;
+    submittedBox.style.display = "block";
+    setStatus("Submitted");
+  } finally{
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit to webhook";
+    setStatus("Ready");
+  }
+}
+
+/* =========================
+ * EDIT
+ * ========================= */
+function openEdit(){
+  if(!collectedData) return;
+  editUI.style.display = (editUI.style.display === "none") ? "block" : "none";
+}
+function applyEdit(){
+  const k = (editKey.value||"").trim();
+  const v = (editVal.value||"").trim();
+  if(!k) return;
+  collectedData[k] = v;
+  editKey.value = "";
+  editVal.value = "";
+  renderSummary();
+}
+function cancelEdit(){
+  editUI.style.display = "none";
+  editKey.value = "";
+  editVal.value = "";
+}
+
+/* =========================
+ * EVENTS
+ * ========================= */
+sendBtn.addEventListener("click", sendUserMessage);
+restartBtn.addEventListener("click", restart);
+chatInput.addEventListener("keydown", (e)=>{ if(e.key==="Enter"){ e.preventDefault(); sendUserMessage(); }});
+
+submitBtn.addEventListener("click", submit);
+editModeBtn.addEventListener("click", openEdit);
+applyEditBtn.addEventListener("click", applyEdit);
+cancelEditBtn.addEventListener("click", cancelEdit);
+
+// boot
+render();
+renderSummary();
+startConversation();
+</script>
+</body>
+</html>
