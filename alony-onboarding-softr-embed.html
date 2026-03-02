@@ -1,0 +1,1493 @@
+<div
+  id="alony-onboarding-root"
+  data-company-name=""
+  data-email=""
+  data-plan=""
+></div>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=DM+Sans:wght@300;400;500;600;700&display=swap");
+
+  #alony-onboarding-root,
+  #alony-onboarding-root * {
+    box-sizing: border-box;
+  }
+
+  #alony-onboarding-root {
+    width: 100%;
+    min-height: 780px;
+    color: #fff;
+    font-family: "DM Sans", sans-serif;
+  }
+
+  #alony-onboarding-root .alony-shell {
+    width: 100%;
+    min-height: 780px;
+    height: min(900px, 85vh);
+    max-height: 920px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(107, 62, 240, 0.18), transparent 36%),
+      linear-gradient(180deg, #120f24 0%, #0d0b1a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+  }
+
+  #alony-onboarding-root .alony-header,
+  #alony-onboarding-root .alony-input-wrap {
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    background: rgba(13, 11, 26, 0.94);
+    backdrop-filter: blur(16px);
+  }
+
+  #alony-onboarding-root .alony-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  #alony-onboarding-root .alony-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  #alony-onboarding-root .alony-brand-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4318c4, #6b3ef0);
+    box-shadow: 0 0 22px rgba(107, 62, 240, 0.32);
+    font: 900 17px "Nunito", sans-serif;
+  }
+
+  #alony-onboarding-root .alony-brand-title {
+    font: 800 15px "Nunito", sans-serif;
+    color: #fff;
+  }
+
+  #alony-onboarding-root .alony-brand-subtitle {
+    margin-top: 3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #b7a7ff;
+    font-size: 11.5px;
+  }
+
+  #alony-onboarding-root .alony-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #34d399;
+    animation: alony-pulse 2s infinite;
+  }
+
+  #alony-onboarding-root .alony-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  #alony-onboarding-root .alony-user-pill,
+  #alony-onboarding-root .alony-secondary-button {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  #alony-onboarding-root .alony-user-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    max-width: 100%;
+  }
+
+  #alony-onboarding-root .alony-user-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #6b3ef0;
+    flex-shrink: 0;
+  }
+
+  #alony-onboarding-root .alony-user-name {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+  }
+
+  #alony-onboarding-root .alony-plan-badge {
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(107, 62, 240, 0.2);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  #alony-onboarding-root button {
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-family: "DM Sans", sans-serif;
+    transition: filter 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  #alony-onboarding-root button:hover:not(:disabled) {
+    filter: brightness(1.07);
+  }
+
+  #alony-onboarding-root button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  #alony-onboarding-root .alony-secondary-button {
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+  }
+
+  #alony-onboarding-root .alony-banner {
+    flex-shrink: 0;
+    padding: 10px 22px;
+    font-size: 12.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  #alony-onboarding-root .alony-banner.is-restored {
+    background: rgba(107, 62, 240, 0.14);
+    color: #b7a7ff;
+    border-bottom-color: rgba(107, 62, 240, 0.2);
+  }
+
+  #alony-onboarding-root .alony-banner.is-error {
+    background: rgba(248, 113, 113, 0.12);
+    color: #fca5a5;
+    border-bottom-color: rgba(248, 113, 113, 0.18);
+  }
+
+  #alony-onboarding-root .alony-messages {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    overflow-y: auto;
+    padding: 22px 22px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  #alony-onboarding-root .alony-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    animation: alony-fade-slide 0.28s ease;
+  }
+
+  #alony-onboarding-root .alony-row.is-user {
+    justify-content: flex-end;
+  }
+
+  #alony-onboarding-root .alony-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #4318c4, #6b3ef0);
+    box-shadow: 0 0 0 2px rgba(107, 62, 240, 0.28);
+    color: #fff;
+    font: 800 13px "Nunito", sans-serif;
+  }
+
+  #alony-onboarding-root .alony-bubble {
+    max-width: min(72%, 760px);
+    padding: 13px 17px;
+    border-radius: 18px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    word-break: break-word;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  #alony-onboarding-root .alony-bubble.is-assistant {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px 18px 18px 4px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+
+  #alony-onboarding-root .alony-bubble.is-user {
+    border-radius: 18px 18px 4px 18px;
+    background: linear-gradient(135deg, #4318c4, #6b3ef0);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(67, 24, 196, 0.34);
+  }
+
+  #alony-onboarding-root .alony-bubble strong {
+    color: #e8d5ff;
+    font-weight: 700;
+  }
+
+  #alony-onboarding-root .alony-bubble em {
+    color: #c4b5fd;
+    font-style: italic;
+  }
+
+  #alony-onboarding-root .alony-typing {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    max-width: 82px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border-bottom-left-radius: 4px;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  #alony-onboarding-root .alony-typing-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #a78bfa;
+    animation: alony-bounce 1.2s infinite;
+  }
+
+  #alony-onboarding-root .alony-typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  #alony-onboarding-root .alony-typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  #alony-onboarding-root .alony-summary {
+    margin-top: 4px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    animation: alony-fade-slide 0.34s ease;
+  }
+
+  #alony-onboarding-root .alony-summary-header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #4318c4, #6b3ef0);
+  }
+
+  #alony-onboarding-root .alony-summary-title {
+    color: #fff;
+    font: 800 18px "Nunito", sans-serif;
+  }
+
+  #alony-onboarding-root .alony-summary-subtitle {
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 13px;
+  }
+
+  #alony-onboarding-root .alony-summary-body {
+    padding: 16px 24px;
+  }
+
+  #alony-onboarding-root .alony-field-row,
+  #alony-onboarding-root .alony-preloaded-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  #alony-onboarding-root .alony-field-row {
+    padding: 11px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  #alony-onboarding-root .alony-field-label,
+  #alony-onboarding-root .alony-preloaded-label {
+    width: 140px;
+    flex-shrink: 0;
+    padding-top: 2px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  #alony-onboarding-root .alony-field-label {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  #alony-onboarding-root .alony-preloaded-label {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  #alony-onboarding-root .alony-field-value {
+    flex: 1;
+    color: #e8e0ff;
+    font-size: 13.5px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+  }
+
+  #alony-onboarding-root .alony-edit-button {
+    flex-shrink: 0;
+    border-radius: 7px;
+    padding: 4px 10px;
+    background: rgba(107, 62, 240, 0.15);
+    border: 1px solid rgba(107, 62, 240, 0.3);
+    color: #a78bfa;
+    font-size: 11px;
+  }
+
+  #alony-onboarding-root .alony-inline-editor {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  #alony-onboarding-root .alony-inline-editor textarea {
+    min-height: 64px;
+  }
+
+  #alony-onboarding-root textarea,
+  #alony-onboarding-root input {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 14px;
+    outline: none;
+  }
+
+  #alony-onboarding-root textarea {
+    resize: none;
+  }
+
+  #alony-onboarding-root textarea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  #alony-onboarding-root .alony-editor-textarea,
+  #alony-onboarding-root .alony-message-input {
+    border-radius: 12px;
+    padding: 10px 12px;
+  }
+
+  #alony-onboarding-root .alony-editor-actions {
+    display: flex;
+    gap: 6px;
+  }
+
+  #alony-onboarding-root .alony-primary-mini,
+  #alony-onboarding-root .alony-muted-mini {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: "Nunito", sans-serif;
+  }
+
+  #alony-onboarding-root .alony-primary-mini {
+    background: linear-gradient(135deg, #4318c4, #6b3ef0);
+  }
+
+  #alony-onboarding-root .alony-muted-mini {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.62);
+  }
+
+  #alony-onboarding-root .alony-preloaded {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  #alony-onboarding-root .alony-preloaded-title {
+    margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  #alony-onboarding-root .alony-preloaded-row {
+    padding: 4px 0;
+  }
+
+  #alony-onboarding-root .alony-preloaded-value {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+  }
+
+  #alony-onboarding-root .alony-warning {
+    margin: 0 24px 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    background: rgba(251, 191, 36, 0.1);
+    color: #fbbf24;
+    font-size: 12.5px;
+  }
+
+  #alony-onboarding-root .alony-summary-footer {
+    padding: 0 24px 24px;
+  }
+
+  #alony-onboarding-root .alony-submit-button {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    font: 800 15px "Nunito", sans-serif;
+    letter-spacing: 0.2px;
+    background: linear-gradient(135deg, #4318c4, #6b3ef0);
+    box-shadow: 0 8px 32px rgba(67, 24, 196, 0.42);
+  }
+
+  #alony-onboarding-root .alony-submit-button.is-done {
+    background: rgba(52, 211, 153, 0.2);
+    box-shadow: none;
+  }
+
+  #alony-onboarding-root .alony-input-wrap {
+    padding: 16px 22px 22px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  #alony-onboarding-root .alony-input-shell {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.24);
+  }
+
+  #alony-onboarding-root .alony-message-input {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    min-height: 24px;
+    max-height: 120px;
+    line-height: 1.6;
+    overflow: auto;
+    font-size: 14.5px;
+  }
+
+  #alony-onboarding-root .alony-message-input:disabled {
+    opacity: 0.5;
+  }
+
+  #alony-onboarding-root .alony-send-button {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #4318c4, #6b3ef0);
+    box-shadow: 0 4px 16px rgba(67, 24, 196, 0.42);
+  }
+
+  #alony-onboarding-root .alony-send-button.is-disabled {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+  }
+
+  #alony-onboarding-root .alony-input-hint {
+    margin-top: 10px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.22);
+    font-size: 11px;
+  }
+
+  #alony-onboarding-root .alony-empty-state {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a78bfa;
+    font: 700 15px "Nunito", sans-serif;
+  }
+
+  #alony-onboarding-root ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  #alony-onboarding-root ::-webkit-scrollbar-thumb {
+    background: rgba(107, 62, 240, 0.35);
+    border-radius: 999px;
+  }
+
+  @keyframes alony-bounce {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+    }
+    30% {
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes alony-fade-slide {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes alony-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+
+  @media (max-width: 768px) {
+    #alony-onboarding-root {
+      min-height: 680px;
+    }
+
+    #alony-onboarding-root .alony-shell {
+      min-height: 680px;
+      height: 82vh;
+      border-radius: 20px;
+    }
+
+    #alony-onboarding-root .alony-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    #alony-onboarding-root .alony-header-actions {
+      width: 100%;
+      justify-content: flex-start;
+    }
+
+    #alony-onboarding-root .alony-user-pill {
+      max-width: 100%;
+    }
+
+    #alony-onboarding-root .alony-bubble {
+      max-width: 88%;
+    }
+
+    #alony-onboarding-root .alony-field-row,
+    #alony-onboarding-root .alony-preloaded-row {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    #alony-onboarding-root .alony-field-label,
+    #alony-onboarding-root .alony-preloaded-label {
+      width: auto;
+      padding-top: 0;
+    }
+
+    #alony-onboarding-root .alony-inline-editor {
+      flex-direction: column;
+    }
+
+    #alony-onboarding-root .alony-editor-actions {
+      width: 100%;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById("alony-onboarding-root");
+    if (!root) return;
+
+    /*
+      Minimum setup:
+      1. Replace chatWebhookUrl with your n8n/web backend URL that returns the next assistant reply.
+      2. Replace submitWebhookUrl if you want final submissions sent to a different endpoint.
+      3. Optionally fill company_name / email / plan below, or pass them via the root data-* attributes.
+    */
+    var config = {
+      chatWebhookUrl: "https://YOUR-N8N-CHAT-WEBHOOK-URL",
+      submitWebhookUrl: "https://YOUR-N8N-SUBMIT-WEBHOOK-URL",
+      storageKey: "alony_onboarding_chat_softr_v1",
+      userData: {
+        company_name: "Acme Corp",
+        email: "hello@acmecorp.com",
+        plan: "Standard"
+      }
+    };
+
+    if (window.AlonyOnboardingConfig && typeof window.AlonyOnboardingConfig === "object") {
+      if (window.AlonyOnboardingConfig.chatWebhookUrl) config.chatWebhookUrl = window.AlonyOnboardingConfig.chatWebhookUrl;
+      if (window.AlonyOnboardingConfig.submitWebhookUrl) config.submitWebhookUrl = window.AlonyOnboardingConfig.submitWebhookUrl;
+      if (window.AlonyOnboardingConfig.storageKey) config.storageKey = window.AlonyOnboardingConfig.storageKey;
+      if (window.AlonyOnboardingConfig.userData && typeof window.AlonyOnboardingConfig.userData === "object") {
+        config.userData = Object.assign({}, config.userData, window.AlonyOnboardingConfig.userData);
+      }
+    }
+
+    var dataCompanyName = root.getAttribute("data-company-name");
+    var dataEmail = root.getAttribute("data-email");
+    var dataPlan = root.getAttribute("data-plan");
+
+    if (dataCompanyName) config.userData.company_name = dataCompanyName;
+    if (dataEmail) config.userData.email = dataEmail;
+    if (dataPlan) config.userData.plan = dataPlan;
+
+    function buildSystemPrompt(userData) {
+      return [
+        "You are Aria, Alony AI's elite onboarding specialist. You're helping " + (userData.company_name || "this business") + " set up their first AI voice agent. Your job is to collect all required configuration details through natural, exciting conversation.",
+        "",
+        "## YOUR PERSONALITY",
+        "- Energetic, sharp, and genuinely excited about what this agent will do for their business",
+        "- You speak like a knowledgeable friend, not a form",
+        "- You celebrate their answers",
+        "- You explain jargon instantly without being condescending",
+        "- You ask ONE question at a time, never stack questions",
+        "",
+        "## PRE-LOADED CLIENT DATA (already known - do NOT ask for these)",
+        "- Company name: " + (userData.company_name || "Unknown"),
+        "- Email: " + (userData.email || "Unknown"),
+        "- Subscription plan: " + (userData.plan || "Standard"),
+        "",
+        "## YOUR GOAL",
+        "Collect ALL of the following fields through conversation and then return the completion signal exactly as specified:",
+        "agent_name, inbound_outbound, lead_data, purpose, warm_cold, faq_objections, greeting_message, tonality, desired_outcome, area_code, voicemail, booking_capabilities, call_transfer_allowed, call_transfer_number, call_transfer_requirements, agent_name_display, agent_description.",
+        "",
+        "## CRITICAL RULES",
+        "- NEVER ask for company_name, client_email, or subscription_plan",
+        "- Ask ONE question at a time",
+        "- warm_cold is ONLY needed if inbound_outbound is outbound",
+        "- Voicemail is only relevant for outbound",
+        "- If call_transfer is yes, collect both the number AND the conditions",
+        "- When all required details are collected, respond ONLY with:",
+        "ARIA_COMPLETE:{\"agent_name\":\"...\",\"inbound_outbound\":\"...\",\"lead_data\":\"...\",\"purpose\":\"...\",\"warm_cold\":\"...\",\"faq_objections\":\"...\",\"greeting_message\":\"...\",\"tonality\":\"...\",\"desired_outcome\":\"...\",\"area_code\":\"...\",\"voicemail\":\"...\",\"booking_capabilities\":\"...\",\"call_transfer_allowed\":\"...\",\"call_transfer_number\":\"...\",\"call_transfer_requirements\":\"...\",\"company_name\":\"" + (userData.company_name || "") + "\",\"client_email\":\"" + (userData.email || "") + "\",\"subscription_plan\":\"" + (userData.plan || "") + "\",\"agent_name_display\":\"...\",\"agent_description\":\"...\"}",
+        "",
+        "## FORMATTING RULES",
+        "- Use **bold** only for key terms inside normal sentences",
+        "- Never use markdown headers or bullet lists in normal replies",
+        "- Keep the tone polished, energetic, and conversational"
+      ].join("\n");
+    }
+
+    function escapeHtml(value) {
+      return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function isPlaceholderUrl(url) {
+      return !url || /YOUR-N8N/i.test(url);
+    }
+
+    function localLoad() {
+      try {
+        var raw = window.localStorage.getItem(config.storageKey);
+        return raw ? JSON.parse(raw) : null;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function localSave() {
+      try {
+        window.localStorage.setItem(
+          config.storageKey,
+          JSON.stringify({
+            messages: state.messages,
+            conversation: state.conversation,
+            collectedData: state.collectedData,
+            userData: state.userData,
+            savedAt: Date.now()
+          })
+        );
+      } catch (error) {
+      }
+    }
+
+    function localClear() {
+      try {
+        window.localStorage.removeItem(config.storageKey);
+      } catch (error) {
+      }
+    }
+
+    function normalizeBooleanLike(value) {
+      if (typeof value !== "string") return value;
+      var lowered = value.trim().toLowerCase();
+      if (["yes", "y", "true"].indexOf(lowered) >= 0) return "Yes";
+      if (["no", "n", "false"].indexOf(lowered) >= 0) return "No";
+      return value;
+    }
+
+    function parseInlineMarkdown(text) {
+      var raw = String(text == null ? "" : text);
+      var regex = /\*\*(.+?)\*\*|\*(.+?)\*/g;
+      var lastIndex = 0;
+      var html = "";
+      var match;
+
+      while ((match = regex.exec(raw))) {
+        html += escapeHtml(raw.slice(lastIndex, match.index));
+        if (match[1] != null) {
+          html += "<strong>" + escapeHtml(match[1]) + "</strong>";
+        } else if (match[2] != null) {
+          html += "<em>" + escapeHtml(match[2]) + "</em>";
+        }
+        lastIndex = regex.lastIndex;
+      }
+
+      html += escapeHtml(raw.slice(lastIndex));
+      return html;
+    }
+
+    function renderMessageHtml(content, isUser) {
+      var safe = String(content == null ? "" : content);
+      if (isUser) {
+        return escapeHtml(safe).replace(/\n/g, "<br>");
+      }
+
+      return safe
+        .split("\n")
+        .map(function (line) {
+          if (!line.trim()) return '<div style="height:6px;"></div>';
+          return '<div style="margin-bottom:2px;">' + parseInlineMarkdown(line) + "</div>";
+        })
+        .join("");
+    }
+
+    function fieldsForSummary(data) {
+      if (!data) return [];
+      var fields = [
+        { key: "agent_name", label: "Agent Name" },
+        { key: "inbound_outbound", label: "Direction" },
+        { key: "purpose", label: "Purpose" },
+        { key: "desired_outcome", label: "Desired Outcome" },
+        { key: "tonality", label: "Tone" },
+        { key: "greeting_message", label: "Greeting Message" },
+        { key: "lead_data", label: "Lead Data" },
+        { key: "warm_cold", label: "Lead Temperature" },
+        { key: "area_code", label: "Area Code" },
+        { key: "booking_capabilities", label: "Booking Capabilities" },
+        { key: "call_transfer_allowed", label: "Call Transfer" },
+        { key: "call_transfer_number", label: "Transfer Number" },
+        { key: "call_transfer_requirements", label: "Transfer Conditions" },
+        { key: "voicemail", label: "Voicemail" },
+        { key: "faq_objections", label: "FAQ & Objections" }
+      ];
+
+      return fields.filter(function (field) {
+        var value = data[field.key];
+        if (value == null) return false;
+        var normalized = String(value).trim();
+        return normalized && ["N/A", "none", "No", "false"].indexOf(normalized) === -1;
+      });
+    }
+
+    function pickStringCandidate(value) {
+      if (typeof value === "string" && value.trim()) return value.trim();
+      if (Array.isArray(value) && value.length) return pickStringCandidate(value[0]);
+      if (value && typeof value === "object") {
+        if (typeof value.text === "string" && value.text.trim()) return value.text.trim();
+        if (typeof value.output === "string" && value.output.trim()) return value.output.trim();
+        if (typeof value.reply === "string" && value.reply.trim()) return value.reply.trim();
+        if (typeof value.message === "string" && value.message.trim()) return value.message.trim();
+        if (typeof value.content === "string" && value.content.trim()) return value.content.trim();
+        if (Array.isArray(value.content) && value.content.length) return pickStringCandidate(value.content[0]);
+      }
+      return "";
+    }
+
+    function parseCompletionSignal(text) {
+      if (typeof text !== "string") return null;
+      var index = text.indexOf("ARIA_COMPLETE:");
+      if (index < 0) return null;
+
+      var jsonText = text.slice(index + "ARIA_COMPLETE:".length).trim();
+      try {
+        return JSON.parse(jsonText);
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function normalizeChatResponse(rawText) {
+      var text = typeof rawText === "string" ? rawText.trim() : "";
+      var parsed;
+
+      if (text) {
+        try {
+          parsed = JSON.parse(text);
+        } catch (error) {
+          parsed = null;
+        }
+      }
+
+      if (Array.isArray(parsed) && parsed.length === 1) {
+        parsed = parsed[0];
+      }
+
+      if (parsed && typeof parsed === "object") {
+        if (parsed.body && typeof parsed.body === "object") {
+          parsed = parsed.body;
+        } else if (parsed.result && typeof parsed.result === "object") {
+          parsed = parsed.result;
+        } else if (
+          parsed.data &&
+          typeof parsed.data === "object" &&
+          !parsed.complete &&
+          !parsed.collectedData &&
+          !parsed.completeData &&
+          !pickStringCandidate(parsed)
+        ) {
+          parsed = parsed.data;
+        }
+
+        if (parsed.complete === true) {
+          return {
+            complete: true,
+            data: parsed.collectedData || parsed.completeData || parsed.data || {},
+            confirmationMessage: pickStringCandidate(parsed.confirmationMessage) || pickStringCandidate(parsed.reply) || ""
+          };
+        }
+
+        var embeddedText = pickStringCandidate(parsed);
+        var embeddedCompletion = parseCompletionSignal(embeddedText);
+        if (embeddedCompletion) {
+          return {
+            complete: true,
+            data: embeddedCompletion,
+            confirmationMessage: ""
+          };
+        }
+
+        if (parsed.collectedData && typeof parsed.collectedData === "object") {
+          return {
+            complete: true,
+            data: parsed.collectedData,
+            confirmationMessage: pickStringCandidate(parsed.confirmationMessage) || ""
+          };
+        }
+
+        if (embeddedText) {
+          return {
+            complete: false,
+            reply: embeddedText
+          };
+        }
+      }
+
+      var textCompletion = parseCompletionSignal(text);
+      if (textCompletion) {
+        return {
+          complete: true,
+          data: textCompletion,
+          confirmationMessage: ""
+        };
+      }
+
+      return {
+        complete: false,
+        reply: text || "Something went wrong. Please try again."
+      };
+    }
+
+    async function postJson(url, payload) {
+      var response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      var text = await response.text();
+      if (!response.ok) {
+        throw new Error(text || "Request failed with status " + response.status);
+      }
+      return text;
+    }
+
+    function scrollToBottom() {
+      var messagesEl = root.querySelector(".alony-messages");
+      if (!messagesEl) return;
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function resizeTextarea(el) {
+      if (!el) return;
+      el.style.height = "auto";
+      var maxHeight = el.classList.contains("alony-message-input") ? 120 : 220;
+      el.style.height = Math.min(el.scrollHeight, maxHeight) + "px";
+    }
+
+    function syncInputControls() {
+      var input = root.querySelector(".alony-message-input");
+      var sendButton = root.querySelector('[data-action="send"]');
+      if (!input || !sendButton) return;
+
+      input.value = state.input;
+      resizeTextarea(input);
+
+      var disabled = state.loading || !state.input.trim();
+      sendButton.disabled = disabled;
+      sendButton.classList.toggle("is-disabled", disabled);
+    }
+
+    function focusMainInput() {
+      if (state.collectedData || state.loading) return;
+      window.requestAnimationFrame(function () {
+        var input = root.querySelector(".alony-message-input");
+        if (!input) return;
+        input.focus();
+        var length = input.value.length;
+        input.setSelectionRange(length, length);
+      });
+    }
+
+    function payloadForSubmit() {
+      var data = state.collectedData || {};
+      var callTransferAllowed = normalizeBooleanLike(data.call_transfer_allowed) === "Yes";
+
+      return {
+        "The agents name": data.agent_name || "",
+        "Inbound/Outbound": data.inbound_outbound || "",
+        "Data you have on people you are calling/called by": data.lead_data || "",
+        "Your website": data.website || "",
+        "Your company name": data.company_name || state.userData.company_name || "",
+        "The purpose of the call for outbound/ reason for inquiry inbound": data.purpose || "",
+        "Warm or cold lead (Outbound ONLY)": data.warm_cold || "",
+        "FAQ and Objection Handling (Leave blank for general responses)": data.faq_objections || "",
+        "Agent Greeting Message": data.greeting_message || "",
+        "Tonality of agent e.g. Serious, Happy, Empathetic": data.tonality || "",
+        "Desired Outcome of Call": data.desired_outcome || "",
+        "Area code": data.area_code || "",
+        "Leave a voicemail (If no leave blank, if yes write word for word, including variable)": data.voicemail || "",
+        "Will the agent need booking capabilities": data.booking_capabilities || "",
+        "Call transfer allowed (If yes answer below)": callTransferAllowed ? ["Yes"] : ["No"],
+        "Call transfer number": data.call_transfer_number || "",
+        "Call transfer requirements (Copy and paste if provided by user write or write exactly 'Normal' for normal rules)": data.call_transfer_requirements || "",
+        "Subscription Plan": data.subscription_plan || state.userData.plan || "",
+        "Company Name": data.company_name || state.userData.company_name || "",
+        "Client Phone Number": data.client_phone || "",
+        "Client Email": data.client_email || state.userData.email || "",
+        "External CRM/Software": data.external_software || "No",
+        "External Endpoint": data.external_endpoint || "",
+        "Agent Name": data.agent_name || "",
+        "Agent Description": data.agent_description || data.purpose || "",
+        "_meta": {
+          source: "softr-custom-code",
+          submittedAt: new Date().toISOString()
+        }
+      };
+    }
+
+    function messageMarkup(msg) {
+      var isUser = msg.role === "user";
+      return [
+        '<div class="alony-row' + (isUser ? " is-user" : "") + '">',
+        !isUser ? '<div class="alony-avatar">A</div>' : "",
+        '<div class="alony-bubble ' + (isUser ? "is-user" : "is-assistant") + '">',
+        renderMessageHtml(msg.content, isUser),
+        "</div>",
+        "</div>"
+      ].join("");
+    }
+
+    function summaryMarkup() {
+      if (!state.collectedData || state.loading) return "";
+
+      var fields = fieldsForSummary(state.collectedData);
+      var editingKey = state.editingKey;
+
+      var rows = fields
+        .map(function (field) {
+          var currentValue = state.collectedData[field.key] == null ? "" : String(state.collectedData[field.key]);
+
+          if (editingKey === field.key) {
+            return [
+              '<div class="alony-field-row">',
+              '<div class="alony-field-label">' + escapeHtml(field.label) + "</div>",
+              '<div class="alony-inline-editor">',
+              '<textarea class="alony-editor-textarea" data-role="edit-input">' + escapeHtml(state.editValue) + "</textarea>",
+              '<div class="alony-editor-actions">',
+              '<button class="alony-primary-mini" data-action="save-edit">Save</button>',
+              '<button class="alony-muted-mini" data-action="cancel-edit">Cancel</button>',
+              "</div>",
+              "</div>",
+              "</div>"
+            ].join("");
+          }
+
+          return [
+            '<div class="alony-field-row">',
+            '<div class="alony-field-label">' + escapeHtml(field.label) + "</div>",
+            '<div class="alony-field-value">' + escapeHtml(currentValue) + "</div>",
+            '<button class="alony-edit-button" data-action="start-edit" data-key="' + escapeHtml(field.key) + '">Edit</button>',
+            "</div>"
+          ].join("");
+        })
+        .join("");
+
+      var preloaded = [
+        { label: "Company", value: state.collectedData.company_name || state.userData.company_name },
+        { label: "Email", value: state.collectedData.client_email || state.userData.email },
+        { label: "Plan", value: state.collectedData.subscription_plan || state.userData.plan }
+      ]
+        .filter(function (item) {
+          return item.value;
+        })
+        .map(function (item) {
+          return [
+            '<div class="alony-preloaded-row">',
+            '<div class="alony-preloaded-label">' + escapeHtml(item.label) + "</div>",
+            '<div class="alony-preloaded-value">' + escapeHtml(item.value) + "</div>",
+            "</div>"
+          ].join("");
+        })
+        .join("");
+
+      return [
+        '<div class="alony-summary">',
+        '<div class="alony-summary-header">',
+        '<div class="alony-summary-title">Your Agent Configuration</div>',
+        '<div class="alony-summary-subtitle">Review everything below. You can edit any item before sending it to your build flow.</div>',
+        "</div>",
+        '<div class="alony-summary-body">',
+        rows,
+        '<div class="alony-preloaded">',
+        '<div class="alony-preloaded-title">Pre-loaded from your account</div>',
+        preloaded,
+        "</div>",
+        "</div>",
+        state.warning ? '<div class="alony-warning">' + escapeHtml(state.warning) + "</div>" : "",
+        '<div class="alony-summary-footer">',
+        '<button class="alony-submit-button' + (state.submitted ? " is-done" : "") + '" data-action="submit" ' + (state.submitting || state.submitted ? "disabled" : "") + ">",
+        state.submitted ? "Agent Created - Check Your Dashboard" : state.submitting ? "Building your agent..." : "Create My Agent",
+        "</button>",
+        "</div>",
+        "</div>"
+      ].join("");
+    }
+
+    function render() {
+      var hasMessages = state.messages.length > 0;
+      var showRestart = state.messages.length > 1;
+      var inputDisabled = state.loading || state.collectedData;
+      var sendDisabled = state.loading || !state.input.trim();
+
+      root.innerHTML = [
+        '<div class="alony-shell">',
+        '<div class="alony-header">',
+        '<div class="alony-brand">',
+        '<div class="alony-brand-badge">A</div>',
+        '<div>',
+        '<div class="alony-brand-title">Aria</div>',
+        '<div class="alony-brand-subtitle"><span class="alony-pulse"></span>Alony AI Onboarding Specialist</div>',
+        "</div>",
+        "</div>",
+        '<div class="alony-header-actions">',
+        '<div class="alony-user-pill">',
+        '<span class="alony-user-dot"></span>',
+        '<span class="alony-user-name">' + escapeHtml(state.userData.company_name || "Your Company") + "</span>",
+        '<span class="alony-plan-badge">' + escapeHtml(state.userData.plan || "Standard") + "</span>",
+        "</div>",
+        showRestart ? '<button class="alony-secondary-button" data-action="restart">Start over</button>' : "",
+        "</div>",
+        "</div>",
+        state.restored && !state.collectedData ? '<div class="alony-banner is-restored">We saved your progress and restored your last session.</div>' : "",
+        state.errorMessage ? '<div class="alony-banner is-error">' + escapeHtml(state.errorMessage) + "</div>" : "",
+        '<div class="alony-messages">',
+        hasMessages ? state.messages.map(messageMarkup).join("") : '<div class="alony-empty-state">Loading...</div>',
+        state.loading
+          ? [
+              '<div class="alony-row">',
+              '<div class="alony-avatar">A</div>',
+              '<div class="alony-typing">',
+              '<span class="alony-typing-dot"></span>',
+              '<span class="alony-typing-dot"></span>',
+              '<span class="alony-typing-dot"></span>',
+              "</div>",
+              "</div>"
+            ].join("")
+          : "",
+        summaryMarkup(),
+        '<div style="height: 24px;"></div>',
+        "</div>",
+        !state.collectedData
+          ? [
+              '<div class="alony-input-wrap">',
+              '<div class="alony-input-shell">',
+              '<textarea class="alony-message-input" placeholder="Type your answer..." rows="1" ' + (inputDisabled ? "disabled" : "") + "></textarea>",
+              '<button class="alony-send-button' + (sendDisabled ? " is-disabled" : "") + '" data-action="send" ' + (sendDisabled ? "disabled" : "") + '>',
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">',
+              '<line x1="22" y1="2" x2="11" y2="13"></line>',
+              '<polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>',
+              "</svg>",
+              "</button>",
+              "</div>",
+              '<div class="alony-input-hint">Press Enter to send, Shift+Enter for a new line.</div>',
+              "</div>"
+            ].join("")
+          : "",
+        "</div>"
+      ].join("");
+
+      syncInputControls();
+      scrollToBottom();
+
+      if (state.editingKey) {
+        var editor = root.querySelector('[data-role="edit-input"]');
+        if (editor) {
+          resizeTextarea(editor);
+          editor.focus();
+          editor.setSelectionRange(editor.value.length, editor.value.length);
+        }
+      } else {
+        focusMainInput();
+      }
+    }
+
+    async function requestAssistant(conversation) {
+      if (isPlaceholderUrl(config.chatWebhookUrl)) {
+        throw new Error("Set your chat webhook URL in the embed before using this widget.");
+      }
+
+      var raw = await postJson(config.chatWebhookUrl, {
+        action: "chat",
+        source: "softr-custom-code",
+        userData: state.userData,
+        systemPrompt: buildSystemPrompt(state.userData),
+        messages: conversation
+      });
+
+      return normalizeChatResponse(raw);
+    }
+
+    async function startConversation() {
+      state.loading = true;
+      state.errorMessage = "";
+      state.restored = false;
+      render();
+
+      try {
+        state.conversation = [{ role: "user", content: "START_ONBOARDING" }];
+        var response = await requestAssistant(state.conversation);
+
+        if (response.complete) {
+          state.collectedData = Object.assign({}, state.userData, response.data || {});
+          state.messages = [
+            {
+              id: Date.now(),
+              role: "assistant",
+              content: response.confirmationMessage || "Everything is ready. Review the configuration below."
+            }
+          ];
+        } else {
+          var reply = response.reply || "Let's start. Is this agent handling **inbound** or **outbound** calls?";
+          state.messages = [{ id: Date.now(), role: "assistant", content: reply }];
+          state.conversation.push({ role: "assistant", content: reply });
+        }
+
+        localSave();
+      } catch (error) {
+        state.messages = [
+          {
+            id: Date.now(),
+            role: "assistant",
+            content: "I could not start the onboarding flow. Check your webhook configuration and CORS settings, then try again."
+          }
+        ];
+        state.errorMessage = error && error.message ? error.message : "Failed to start onboarding.";
+      } finally {
+        state.loading = false;
+        render();
+      }
+    }
+
+    async function sendCurrentMessage() {
+      var text = state.input.trim();
+      if (!text || state.loading) return;
+
+      state.errorMessage = "";
+      state.input = "";
+
+      var userMessage = {
+        id: Date.now(),
+        role: "user",
+        content: text
+      };
+
+      state.messages.push(userMessage);
+      state.conversation.push({ role: "user", content: text });
+      state.loading = true;
+      render();
+
+      try {
+        var response = await requestAssistant(state.conversation);
+
+        if (response.complete) {
+          state.collectedData = Object.assign({}, state.userData, response.data || {});
+
+          state.messages.push({
+            id: Date.now() + 1,
+            role: "assistant",
+            content:
+              response.confirmationMessage ||
+              "That's everything I need. Review your agent configuration below, make any edits you want, then create the agent when you're ready."
+          });
+        } else {
+          var reply = response.reply || "Something went wrong. Please try again.";
+          state.conversation.push({ role: "assistant", content: reply });
+          state.messages.push({
+            id: Date.now() + 1,
+            role: "assistant",
+            content: reply
+          });
+        }
+
+        localSave();
+      } catch (error) {
+        state.messages.push({
+          id: Date.now() + 2,
+          role: "assistant",
+          content: "Something went wrong. Please try again."
+        });
+        state.errorMessage = error && error.message ? error.message : "Message request failed.";
+      } finally {
+        state.loading = false;
+        render();
+      }
+    }
+
+    async function submitConfiguration() {
+      if (!state.collectedData || state.submitting || state.submitted) return;
+
+      state.submitting = true;
+      state.warning = "";
+      state.errorMessage = "";
+
+      var requiredFields = [
+        "agent_name",
+        "inbound_outbound",
+        "purpose",
+        "desired_outcome",
+        "tonality",
+        "greeting_message",
+        "area_code"
+      ];
+      var missing = requiredFields.filter(function (field) {
+        return !state.collectedData[field];
+      });
+
+      if (missing.length) {
+        state.warning = "Some details are still missing: " + missing.join(", ") + ". You can still submit, but the build may need manual cleanup.";
+      }
+
+      render();
+
+      try {
+        var submitUrl = isPlaceholderUrl(config.submitWebhookUrl) ? config.chatWebhookUrl : config.submitWebhookUrl;
+        if (isPlaceholderUrl(submitUrl)) {
+          throw new Error("Set your submit webhook URL in the embed before submitting.");
+        }
+
+        await postJson(submitUrl, {
+          action: "submit",
+          source: "softr-custom-code",
+          userData: state.userData,
+          collectedData: state.collectedData,
+          payload: payloadForSubmit()
+        });
+
+        state.submitted = true;
+        localClear();
+      } catch (error) {
+        state.errorMessage = error && error.message ? error.message : "Submit request failed.";
+      } finally {
+        state.submitting = false;
+        render();
+      }
+    }
+
+    function restartConversation() {
+      localClear();
+      state.messages = [];
+      state.input = "";
+      state.loading = false;
+      state.collectedData = null;
+      state.submitting = false;
+      state.submitted = false;
+      state.warning = "";
+      state.errorMessage = "";
+      state.editingKey = "";
+      state.editValue = "";
+      state.restored = false;
+      state.conversation = [];
+      render();
+      startConversation();
+    }
+
+    var state = {
+      userData: Object.assign({}, config.userData),
+      messages: [],
+      input: "",
+      loading: false,
+      collectedData: null,
+      submitting: false,
+      submitted: false,
+      warning: "",
+      errorMessage: "",
+      editingKey: "",
+      editValue: "",
+      restored: false,
+      conversation: []
+    };
+
+    root.addEventListener("click", function (event) {
+      var target = event.target.closest("[data-action]");
+      if (!target) return;
+
+      var action = target.getAttribute("data-action");
+      if (action === "send") {
+        sendCurrentMessage();
+        return;
+      }
+
+      if (action === "restart") {
+        restartConversation();
+        return;
+      }
+
+      if (action === "submit") {
+        submitConfiguration();
+        return;
+      }
+
+      if (action === "start-edit") {
+        var key = target.getAttribute("data-key");
+        if (!key || !state.collectedData) return;
+        state.editingKey = key;
+        state.editValue = state.collectedData[key] == null ? "" : String(state.collectedData[key]);
+        render();
+        return;
+      }
+
+      if (action === "save-edit") {
+        if (!state.collectedData || !state.editingKey) return;
+        state.collectedData[state.editingKey] = state.editValue;
+        state.editingKey = "";
+        state.editValue = "";
+        localSave();
+        render();
+        return;
+      }
+
+      if (action === "cancel-edit") {
+        state.editingKey = "";
+        state.editValue = "";
+        render();
+      }
+    });
+
+    root.addEventListener("input", function (event) {
+      var target = event.target;
+
+      if (target.classList.contains("alony-message-input")) {
+        state.input = target.value;
+        resizeTextarea(target);
+
+        var sendButton = root.querySelector('[data-action="send"]');
+        if (sendButton) {
+          var disabled = state.loading || !state.input.trim();
+          sendButton.disabled = disabled;
+          sendButton.classList.toggle("is-disabled", disabled);
+        }
+        return;
+      }
+
+      if (target.getAttribute("data-role") === "edit-input") {
+        state.editValue = target.value;
+        resizeTextarea(target);
+      }
+    });
+
+    root.addEventListener("keydown", function (event) {
+      if (!event.target.classList.contains("alony-message-input")) return;
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendCurrentMessage();
+      }
+    });
+
+    var saved = localLoad();
+    if (saved && saved.messages && saved.messages.length) {
+      state.messages = saved.messages;
+      state.collectedData = saved.collectedData || null;
+      state.userData = Object.assign({}, state.userData, saved.userData || {});
+      if (Array.isArray(saved.conversation) && saved.conversation.length) {
+        state.conversation = saved.conversation;
+      } else {
+        state.conversation = saved.messages.map(function (item) {
+          return {
+            role: item.role,
+            content: item.content
+          };
+        });
+
+        if (
+          !state.collectedData &&
+          state.conversation.length &&
+          state.conversation[0].role === "assistant"
+        ) {
+          state.conversation.unshift({ role: "user", content: "START_ONBOARDING" });
+        }
+      }
+      state.restored = true;
+      render();
+    } else {
+      render();
+      startConversation();
+    }
+  })();
+</script>
